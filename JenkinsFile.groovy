@@ -24,8 +24,21 @@ pipeline {
                 }
             }
         }
+        
+        stage('print') {
+            steps {
+                script {
+
+                    
+
+                    sh "echo may be losen"
+                    sleep 5
+                }
+            }
+        }
 
     }
+    
 
     post {
         success {
