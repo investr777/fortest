@@ -32,7 +32,7 @@ pipeline {
                     
 
                     sh "echo may be losen"
-                    sleep 5
+                    sle1ep 5
                 }
             }
         }
