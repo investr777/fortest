@@ -9,11 +9,10 @@ pipeline {
     agent any
 
     parameters {
-
+        choice(choices: 'us-east-1\nus-east-2\nus-west-1\nus-west-2', description: 'Region to deploy.', name: 'region')
         string(defaultValue: '', description: 'Suffix that will be added to resource', name: 'Environment_Id')
         string(defaultValue: '', description: 'WarmUp backend URL', name: 'warmup_backend_url')
-        string(defaultValue: '', description: 'region', name: 'region')
-        string(defaultValue: '', description: 'aws_credentials_id', name: 'aws_credentials_id')
+        choice(choices: '4b675045-3a80-4925-8e63-72871a219782', description: 'Jenkins AWS credentials id that is associated with AWS account', name: 'aws_credentials_id')
     }
 
     stages {
