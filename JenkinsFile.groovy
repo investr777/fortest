@@ -1,4 +1,7 @@
-def name
+def env
+def reg
+def cred
+def url
 
 
 pipeline {
@@ -7,7 +10,10 @@ pipeline {
 
     parameters {
 
-        string(defaultValue: '', description: 'Suffix that will be added to resource', name: 'name_cat')
+        string(defaultValue: '', description: 'Suffix that will be added to resource', name: 'Environment_Id')
+        string(defaultValue: '', description: 'WarmUp backend URL', name: 'warmup_backend_url')
+        string(defaultValue: '', description: 'region', name: 'region')
+        string(defaultValue: '', description: 'aws_credentials_id', name: 'aws_credentials_id')
     }
 
     stages {
@@ -16,11 +22,20 @@ pipeline {
             steps {
                 script {
 
-                    if (!params.name_cat?.trim()) error("Region param is not specified")
+                    if (!params.Environment_Id?.trim()) error("Region param is not specified")
+                    if (!params.warmup_backend_url?.trim()) error("Region param is not specified")
+                    if (!params.region?.trim()) error("Region param is not specified")
+                    if (!params.aws_credentials_id?.trim()) error("Region param is not specified")
 
-                    name = "${params.name_cat}"
+                    env = "${params.Environment_Id}"
+                    cred = "${params.region}"
+                    reg = "${params.warmup_backend_url}"
+                    url = "${params.aws_credentials_id}"
 
-                    sh "echo create new warmup ui stack: ${name}"
+                    sh "echo env: ${env}"
+                    sh "echo cred: ${cred}"
+                    sh "echo reg: ${reg}"
+                    sh "echo url: ${url}"
                 }
             }
         }
@@ -44,7 +59,7 @@ pipeline {
         success {
             slackSend channel: '#bot',
                 color: 'good',
-                message: "The name ${name} completed successfully."
+                message: "env: ${env}, cred: ${cred}, reg: ${reg},  url: ${url} completed successfully."
         }
         failure {
             slackSend channel: '#bot',
